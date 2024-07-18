@@ -2,8 +2,6 @@
 
 GitHub Actions 实现 [GLaDOS][glados] 自动签到
 
-([GLaDOS][glados] 可用邀请码: `FC173-7H26H-R5V8R-HAJI4`, 双方都有奖励天数)
-
 ## 使用说明
 
 1. Fork 这个仓库
