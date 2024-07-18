@@ -22,10 +22,6 @@ const glados = async () => {
       headers,
     }).then((r) => r.json());
 
-    // Debugging output
-    console.log('Checkin response:', checkin);
-    console.log('Status response:', status);
-
     const banlance = Math.floor(parseFloat(checkin.list[0].balance));
     const change = Math.floor(parseFloat(checkin.list[0].change));
 
@@ -52,9 +48,6 @@ const glados = async () => {
 
 const notify = async (contents) => {
   const token = process.env.NOTIFY;
-  console.log(contents[0]);
-  console.log('\n');
-  console.log(contents.join('<br>'));
 
   if (!token || !contents) return;
   await fetch('https://www.pushplus.plus/send', {
