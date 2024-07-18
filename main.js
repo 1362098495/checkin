@@ -1,39 +1,63 @@
+import fetch from 'node-fetch';
+
 const glados = async () => {
-  const cookie = process.env.GLADOS
-  if (!cookie) return
+  const cookie = process.env.GLADOS;
+  const Account = process.env.Account;
+
+  if (!cookie) return;
   try {
     const headers = {
       'cookie': cookie,
       'referer': 'https://glados.rocks/console/checkin',
       'user-agent': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)',
-    }
+    };
     const checkin = await fetch('https://glados.rocks/api/user/checkin', {
       method: 'POST',
       headers: { ...headers, 'content-type': 'application/json' },
       body: '{"token":"glados.one"}',
-    }).then((r) => r.json())
+    }).then((r) => r.json());
+
     const status = await fetch('https://glados.rocks/api/user/status', {
       method: 'GET',
       headers,
-    }).then((r) => r.json())
+    }).then((r) => r.json());
+
+    // Debugging output
+    console.log('Checkin response:', checkin);
+    console.log('Status response:', status);
+
+    const banlance = Math.floor(parseFloat(checkin.list[0].balance));
+    const change = Math.floor(parseFloat(checkin.list[0].change));
+
+    if (!status.data || typeof status.data.leftDays === 'undefined') {
+      throw new Error('Unexpected response format: ' + JSON.stringify(status));
+    }
+
     return [
-      'Checkin OK',
-      `${checkin.message}`,
-      `Left Days ${Number(status.data.leftDays)}`,
-    ]
+      `签到成功！总点数：${banlance}`,
+      `账号：${Account}`,
+      `获得点数：${change}`,
+      `总点数：${banlance}`,
+      `剩余天数：${Number(status.data.leftDays)}`,
+    ];
   } catch (error) {
+    console.error('Error during checkin:', error);
     return [
-      'Checkin Error',
-      `${error}`,
+      '签到失败！请尽快检查！！',
+      `${error.message}`,
       `<${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}>`,
-    ]
+    ];
   }
-}
+};
 
 const notify = async (contents) => {
-  const token = process.env.NOTIFY
-  if (!token || !contents) return
-  await fetch(`https://www.pushplus.plus/send`, {
+  const token = process.env.NOTIFY;
+  console.log(contents[0]);
+  console.log('\n');
+  console.log(contents.join('<br>'));
+
+  if (!token || !contents) return;
+  await fetch('https://www.pushplus.plus/send', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
@@ -42,12 +66,11 @@ const notify = async (contents) => {
       content: contents.join('<br>'),
       template: 'markdown',
     }),
-  })
-}
+  });
+};
 
 const main = async () => {
-  await notify(await glados())
-}
+  await notify(await glados());
+};
 
-main()
-
+main();
