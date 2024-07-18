@@ -1,6 +1,6 @@
 const glados = async () => {
   const cookie = process.env.GLADOS;
-  const Account = process.env.ACCOUNT;
+  const account = process.env.ACCOUNT;
 
   if (!cookie) return;
   try {
@@ -29,7 +29,7 @@ const glados = async () => {
 
     return [
       `签到成功！总点数：${banlance}`,
-      `账号：${Account}`,
+      `账号：${account}`,
       `获得点数：${change}`,
       `总点数：${banlance}`,
       `剩余天数：${Number(status.data.leftDays)}`,
