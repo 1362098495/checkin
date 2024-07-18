@@ -1,6 +1,6 @@
 const glados = async () => {
   const cookie = process.env.GLADOS;
-  const Account = process.env.Account;
+  const Account = process.env.ACCOUNT;
 
   if (!cookie) return;
   try {
