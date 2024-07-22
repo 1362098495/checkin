@@ -2,6 +2,10 @@ const glados = async () => {
   const cookie = process.env.GLADOS;
   const account = process.env.ACCOUNT;
 
+  console.log('Starting glados function...');
+  console.log('GLADOS:', cookie);
+  console.log('ACCOUNT:', account);
+
   if (!cookie) {
     console.error('GLADOS cookie is missing');
     return;
@@ -27,6 +31,8 @@ const glados = async () => {
       method: 'GET',
       headers,
     }).then((r) => r.json());
+
+    console.log('Status response:', status);
 
     const balance = Math.floor(parseFloat(checkin.list[0].balance));
     const change = Math.floor(parseFloat(checkin.list[0].change));
@@ -55,6 +61,10 @@ const glados = async () => {
 const notify = async (contents) => {
   const token = process.env.NOTIFY;
 
+  console.log('Starting notify function...');
+  console.log('NOTIFY token:', token);
+  console.log('Contents:', contents);
+
   if (!token || !contents) return;
   await fetch('https://www.pushplus.plus/send', {
     method: 'POST',
@@ -69,6 +79,11 @@ const notify = async (contents) => {
 };
 
 const main = async () => {
+  console.log('Starting main function...');
+  console.log('GLADOS:', process.env.GLADOS);
+  console.log('ACCOUNT:', process.env.ACCOUNT);
+  console.log('NOTIFY:', process.env.NOTIFY);
+
   await notify(await glados());
 };
 
