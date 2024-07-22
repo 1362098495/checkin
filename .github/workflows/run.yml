@@ -15,7 +15,9 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: npm run main
+      - run: |
+          set -x
+          npm run main
         env:
           GLADOS: ${{ secrets.GLADOS }}
           NOTIFY: ${{ secrets.NOTIFY }}
