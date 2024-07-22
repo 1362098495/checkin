@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    - cron: 30 9 * * *
+    - cron: '10 16 * * *'
 
 jobs:
   run:
@@ -14,10 +14,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npm install
-      - run: |
-          set -x
-          npm run main
+      - run: npm ci
+      - run: npm run main
         env:
           GLADOS: ${{ secrets.GLADOS }}
           NOTIFY: ${{ secrets.NOTIFY }}
