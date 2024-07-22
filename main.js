@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 const glados = async () => {
   const cookie = process.env.GLADOS;
   const account = process.env.ACCOUNT;
