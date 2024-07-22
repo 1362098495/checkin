@@ -3,4 +3,7 @@
   "scripts": {
     "main": "node main.js"
   }
+  "dependencies": {
+    "node-fetch": "^3.0.0"
+  }
 }
