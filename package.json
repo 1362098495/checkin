@@ -1,9 +1,13 @@
 {
-  "type": "module",
+  "name": "checkin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
   "scripts": {
     "main": "node main.js"
-  }
+  },
   "dependencies": {
     "node-fetch": "^3.0.0"
   }
 }
+
