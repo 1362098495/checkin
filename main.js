@@ -66,7 +66,7 @@ const notify = async (contents) => {
   console.log('Contents:', contents);
 
   if (!token || !contents) return;
-  await fetch('https://www.pushplus.plus/send', {
+  await fetch('https://sctapi.ftqq.com/'+token+'.send', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
